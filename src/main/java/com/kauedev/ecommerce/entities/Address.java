@@ -7,6 +7,14 @@ public class Address {
 	private String road;
 	private String houseNumber;
 	
+	public Address(String state, String city, String neighborhood, String road, String houseNumber) {
+		this.state = state;
+		this.city = city;
+		this.neighborhood = neighborhood;
+		this.road = road;
+		this.houseNumber = houseNumber;
+	}
+	
 	public String getState() {
 		return state;
 	}
@@ -38,4 +46,15 @@ public class Address {
 		this.houseNumber = houseNumber;
 	}
 	
+	@Override
+	public String toString() {
+		return """
+				Address{
+				State:'%s',
+				City:'%s', 
+				Neighborhood:'%s', 
+				Road:'%s', 
+				HouseNumber:'%s'}
+				""".formatted(state, city, neighborhood, road, houseNumber);
+	}
 }

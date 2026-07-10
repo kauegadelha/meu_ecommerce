@@ -7,14 +7,19 @@ public class Product {
 	private final String barcode;
 	private String name;
 	private BigDecimal price;
+	private String shortDescription;
 	private final LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	
-	public Product(String barcode, String name, BigDecimal price) {
+	public Product(String barcode, String name, BigDecimal price, String shortDescription) {
+		if (barcode == null || barcode.isBlank()) throw new IllegalArgumentException("Código de barra é obrigatório!");
 		this.barcode = barcode;
+		if (name == null || name.isBlank()) throw new IllegalArgumentException("Nome é obrigatório!");
 		this.name = name;
 		if (!validatePrice(price)) throw new IllegalArgumentException("Preço inferior ou igual a zero é inválido!");
 		this.price = price;
+		if (shortDescription == null || shortDescription.isBlank()) throw new IllegalArgumentException("Descrição curta é obrigatória!");
+		this.shortDescription = shortDescription;
 		this.createdAt = LocalDateTime.now();
 		this.updatedAt = createdAt;
 	}
@@ -25,6 +30,7 @@ public class Product {
 		return name;
 	}
 	public void setName(String name) {
+		if (name == null || name.isBlank()) throw new IllegalArgumentException("Nome é obrigatório!");
 		this.name = name;
 		updateTimestamp();
 	}
@@ -34,6 +40,16 @@ public class Product {
 	public void setPrice(BigDecimal price) {
 		if (!validatePrice(price)) throw new IllegalArgumentException("Preço inferior ou igual a zero é inválido!");
 		this.price = price;
+		updateTimestamp();
+	}
+	
+	public String getShortDescription() {
+		return shortDescription;
+	}
+	
+	public void setShortDescription(String shortDescription) {
+		if (shortDescription == null || shortDescription.isBlank()) throw new IllegalArgumentException("Descrição curta é obrigatória!");
+		this.shortDescription = shortDescription;
 		updateTimestamp();
 	}
 	
@@ -50,9 +66,28 @@ public class Product {
 	}
 	
 	private boolean validatePrice(BigDecimal price) {
-		if (price == null || price.compareTo(BigDecimal.ZERO) <= 0) {
-			return false;
-		}
-		return true;
+		return price != null && price.compareTo(BigDecimal.ZERO) > 0;
 	}
+	
+	@Override
+	public String toString() {
+		return "Product{name='%s', barcode='%s'}".formatted(name, barcode);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (!(obj instanceof Product)) return false;
+		
+		Product other = (Product) obj;
+		
+		return barcode.equals(other.barcode);
+		
+	}
+	
+	@Override 
+	public int hashCode() {
+		return barcode.hashCode();
+	}
+	
 }
