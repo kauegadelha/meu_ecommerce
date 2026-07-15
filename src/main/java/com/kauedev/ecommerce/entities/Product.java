@@ -3,13 +3,26 @@ package com.kauedev.ecommerce.entities;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_product")
 public class Product {
+	@Id
 	private final String barcode;
+	
 	private String name;
 	private BigDecimal price;
 	private String shortDescription;
 	private final LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	
+	protected Product() {
+		this.barcode = null;
+		this.createdAt = null;
+	}
 	
 	public Product(String barcode, String name, BigDecimal price, String shortDescription) {
 		if (barcode == null || barcode.isBlank()) throw new IllegalArgumentException("Código de barra é obrigatório!");
@@ -23,6 +36,7 @@ public class Product {
 		this.createdAt = LocalDateTime.now();
 		this.updatedAt = createdAt;
 	}
+	
 	public String getBarcode() {
 		return barcode;
 	}

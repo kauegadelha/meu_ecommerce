@@ -3,14 +3,39 @@ package com.kauedev.ecommerce.entities;
 import java.util.HashMap;
 import java.util.Map;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapKeyJoinColumn;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_stock")
 public class Stock {
-	private final Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	private String name;
+	
+	@ElementCollection
+	@CollectionTable(
+			name = "tb_stock_product",
+			joinColumns = @JoinColumn(name = "stock_id")
+	)
+	@MapKeyJoinColumn(name = "product_barcode")
+	@Column(name = "quantity")
 	private Map<Product, Integer> products;
 	
-	public Stock(Long id, String name) {
-		if (id == null) throw new IllegalArgumentException("Id é obrigatório!");
-		this.id = id;
+	protected Stock() {
+	}
+	
+	public Stock(String name) {
 		if (name == null || name.isBlank()) throw new IllegalArgumentException("Nome é obrigatório!");
 		this.name = name;
 		products = new HashMap<>();
@@ -75,11 +100,11 @@ public class Stock {
 		if (!(obj instanceof Stock)) return false;
 		
 		Stock other = (Stock) obj;
-		return id.equals(other.id);
+		return name.equals(other.name);
 	}
 	
 	@Override
 	public int hashCode() {
-		return id.hashCode();
+		return name.hashCode();
 	}
 }
