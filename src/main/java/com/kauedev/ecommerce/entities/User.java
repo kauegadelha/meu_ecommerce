@@ -1,6 +1,7 @@
 package com.kauedev.ecommerce.entities;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,7 +19,9 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(nullable = false, unique = true)
 	private String userName;
+	
 	private String password;
 	private String phone;
 	
@@ -39,6 +42,10 @@ public class User {
 		
 	}
 	
+	public Role getRole() {
+		return role;
+	}
+
 	public User(String userName, String password, String phone, Address address, Role role) {
 		if (userName.isEmpty() || userName.isBlank()) throw new IllegalArgumentException("Nome de usuário é obrigatório!");
 		this.userName = userName;

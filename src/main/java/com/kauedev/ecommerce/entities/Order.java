@@ -90,4 +90,17 @@ public class Order {
 	public List<OrderItem> getItems(){
 		return List.copyOf(items);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (!(obj instanceof Order)) return false;
+	    Order other = (Order) obj;
+	    return id != null && id.equals(other.id);
+	}
+
+	@Override
+	public int hashCode() {
+	    return getClass().hashCode(); 
+	}
 }
