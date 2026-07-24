@@ -1,10 +1,21 @@
 package com.kauedev.ecommerce.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class AddressInsertDTO {
+	@NotBlank(message = "Estado é obrigatório")
     private String state;
+	
+	@NotBlank(message = "Cidade é obrigatória")
     private String city;
+	
+	@NotBlank(message = "Bairro é obrigatório")
     private String neighborhood;
+	
+	@NotBlank(message = "Rua é obrigatória")
     private String road;
+	
+	@NotBlank(message = "Número da casa/apt é obrigatório!")
     private String houseNumber;
 
     public AddressInsertDTO() {}

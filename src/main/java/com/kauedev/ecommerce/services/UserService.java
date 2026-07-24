@@ -79,11 +79,11 @@ public class UserService {
 	}
 	
 	@Transactional
-	public void updatePassword(Long id, String novaSenha) {
+	public void updatePassword(Long id, String newPassword) {
 		validateUserExists(id);
 		
 	    User user = userRepository.getReferenceById(id);
-	    user.setPassword(novaSenha);
+	    user.setPassword(newPassword);
 	    userRepository.save(user);
 	}
 	
