@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kauedev.ecommerce.dto.UserDTO;
 import com.kauedev.ecommerce.dto.UserInsertDTO;
+import com.kauedev.ecommerce.dto.UserUpdateDTO;
 import com.kauedev.ecommerce.services.UserService;
 
 import jakarta.validation.Valid;
@@ -37,7 +38,7 @@ public class UserController {
 	}
 	
 	@PutMapping(value = "/{id}/update")
-	public UserDTO updateUser(@PathVariable Long id, @Valid @RequestBody UserInsertDTO dto) {
+	public UserDTO updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
 		UserDTO user = userService.updateUser(id, dto);
 		return user;
 	}

@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	@Query(nativeQuery = true, value  = """
 			SELECT * FROM tb_user u
-			WHERE u.userName = :name 
+			WHERE u.user_name = :name 
 			""")
 	Optional<User> findByName(@Param("name") String name);
 }

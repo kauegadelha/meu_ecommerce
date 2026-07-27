@@ -1,12 +1,14 @@
 package com.kauedev.ecommerce.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kauedev.ecommerce.dto.AddressInsertDTO;
 import com.kauedev.ecommerce.dto.UserDTO;
 import com.kauedev.ecommerce.dto.UserInsertDTO;
+import com.kauedev.ecommerce.dto.UserUpdateDTO;
 import com.kauedev.ecommerce.entities.Address;
 import com.kauedev.ecommerce.entities.User;
 import com.kauedev.ecommerce.entities.User.Role;
@@ -19,6 +21,9 @@ import com.kauedev.ecommerce.services.exceptions.ResourceNotFoundException;
 public class UserService {
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	private void validateUserExists(Long id) {
 	    if (!userRepository.existsById(id)) throw new ResourceNotFoundException("Usuário não encontrado, id: %d".formatted(id));
@@ -43,9 +48,11 @@ public class UserService {
 			addressDTO.getHouseNumber()
 			);
 		
+		String hashedPassword = passwordEncoder.encode(dto.getPassword());
+		
 		User user = new User(
 			dto.getUserName(),
-			dto.getPassword(),
+			hashedPassword,
 			dto.getPhone(),
 			address,
 			Role.CLIENT
@@ -56,7 +63,7 @@ public class UserService {
 	}
 	
 	@Transactional
-	public UserDTO updateUser (Long id, UserInsertDTO dto) {
+	public UserDTO updateUser (Long id, UserUpdateDTO dto) {
 		validateUserExists(id);
 		
 		User user = userRepository.getReferenceById(id);
@@ -83,7 +90,8 @@ public class UserService {
 		validateUserExists(id);
 		
 	    User user = userRepository.getReferenceById(id);
-	    user.setPassword(newPassword);
+	    
+	    user.setPassword(passwordEncoder.encode(newPassword));
 	    userRepository.save(user);
 	}
 	
