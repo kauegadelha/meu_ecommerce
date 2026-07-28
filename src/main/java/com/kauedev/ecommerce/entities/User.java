@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_user")
@@ -22,7 +23,9 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String userName;
 	
+	@JsonIgnore
 	private String password;
+	
 	private String phone;
 	
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -61,15 +64,19 @@ public class User {
 	public Long getId() {
 		return id;
 	}
-
+	
+	
 	public String getUserName() {
 		return userName;
 	}
-
-
+	
 	public void setUserName(String userName) {
 		if (userName.isEmpty() || userName.isBlank()) throw new IllegalArgumentException("Nome de usuário é obrigatório!");
 		this.userName = userName;
+	}
+	
+	public String getPassword() {
+		return password;
 	}
 
 	public void setPassword(String password) {
