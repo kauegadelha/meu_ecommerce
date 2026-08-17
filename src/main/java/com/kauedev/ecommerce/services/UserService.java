@@ -64,9 +64,8 @@ public class UserService {
 	
 	@Transactional
 	public UserDTO updateUser (Long id, UserUpdateDTO dto) {
-		validateUserExists(id);
-		
-		User user = userRepository.getReferenceById(id);
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado, id: %d".formatted(id)));
 		
 		user.setUserName(dto.getUserName());
 		user.setPhone(dto.getPhone());
@@ -87,10 +86,9 @@ public class UserService {
 	
 	@Transactional
 	public void updatePassword(Long id, String newPassword) {
-		validateUserExists(id);
-		
-	    User user = userRepository.getReferenceById(id);
-	    
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado, id: %d".formatted(id)));
+
 	    user.setPassword(passwordEncoder.encode(newPassword));
 	    userRepository.save(user);
 	}

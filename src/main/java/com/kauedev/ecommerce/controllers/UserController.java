@@ -40,14 +40,14 @@ public class UserController {
 		return userService.findUser(name);
 	}
 	
-	@PostMapping(value = "/create")
+	@PostMapping()
 	public ResponseEntity<UserDTO> insertUser(@Valid @RequestBody UserInsertDTO dto) {
 		UserDTO user = userService.insertUser(dto);
 		return ResponseEntity.status(201).body(user);
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER') or #id == authentication.principal.user.id")
-	@PutMapping(value = "/{id}/update")
+	@PutMapping(value = "/{id}")
 	public UserDTO updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
 		UserDTO user = userService.updateUser(id, dto);
 		return user;
@@ -55,14 +55,16 @@ public class UserController {
 	
 	@PreAuthorize("#id == authentication.principal.user.id")
 	@PatchMapping(value = "/{id}/password")
-	public void updatePassword(@PathVariable Long id,@RequestBody String newPassword) {
+	public ResponseEntity<Void> updatePassword(@PathVariable Long id,@RequestBody String newPassword) {
 		userService.updatePassword(id, newPassword);
+		return ResponseEntity.noContent().build();
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER') or #id == authentication.principal.user.id")
 	@DeleteMapping(value = "/{id}")
-	public void deleteUser(@PathVariable Long id) {
+	public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
 		userService.deleteUser(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }
