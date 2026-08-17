@@ -2,6 +2,7 @@ package com.kauedev.ecommerce.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -11,17 +12,15 @@ import jakarta.persistence.Table;
 @Table(name = "tb_product")
 public class Product {
 	@Id
-	private final String barcode;
+	private String barcode;
 	
 	private String name;
 	private BigDecimal price;
 	private String shortDescription;
-	private final LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	
 	protected Product() {
-		this.barcode = null;
-		this.createdAt = null;
 	}
 	
 	public Product(String barcode, String name, BigDecimal price, String shortDescription) {
@@ -95,13 +94,13 @@ public class Product {
 		
 		Product other = (Product) obj;
 		
-		return barcode.equals(other.barcode);
+		return Objects.equals(barcode, other.barcode);
 		
 	}
 	
 	@Override 
 	public int hashCode() {
-		return barcode.hashCode();
+		return Objects.hash(barcode);
 	}
 	
 }
