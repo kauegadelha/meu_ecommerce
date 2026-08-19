@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -14,10 +15,19 @@ public class Product {
 	@Id
 	private String barcode;
 	
+	@Column(nullable = false, length = 120)
 	private String name;
+	
+	@Column(nullable = false, precision = 10, scale = 2)
 	private BigDecimal price;
+	
+	@Column(nullable = false, length = 500)
 	private String shortDescription;
+	
+	@Column(nullable = false, updatable = false)
 	private LocalDateTime createdAt;
+	
+	@Column(nullable = false)
 	private LocalDateTime updatedAt;
 	
 	protected Product() {

@@ -75,4 +75,16 @@ public class StockItem {
 	public String toString() {
 		return "StockItem{stock='%s', product='%s', quantity=%d}".formatted(stock.getName(), product.getName(), quantity);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (!(obj instanceof StockItem other)) return false;
+		return id != null && id.equals(other.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return getClass().hashCode();
+	}
 }

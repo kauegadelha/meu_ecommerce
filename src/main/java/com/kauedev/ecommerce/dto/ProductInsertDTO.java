@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 
 public class ProductInsertDTO {
 	@NotBlank(message = "código de barra é obrigatório!")
+	@Pattern(regexp = "\\d{8}|\\d{12}|\\d{13}", message = "código de barra deve ter 8, 12 ou 13 dígitos numéricos!")
 	private String barcode;
 	
 	@NotBlank(message = "nome do produto é obrigatório!")

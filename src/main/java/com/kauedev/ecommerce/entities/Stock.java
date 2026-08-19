@@ -49,11 +49,11 @@ public class Stock {
 		if (!(obj instanceof Stock)) return false;
 
 		Stock other = (Stock) obj;
-		return name.equals(other.name);
+		return id != null && id.equals(other.id);
 	}
 
 	@Override
 	public int hashCode() {
-		return name.hashCode();
+		return getClass().hashCode();
 	}
 }
