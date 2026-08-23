@@ -49,8 +49,7 @@ public class UserController {
 	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER') or #id == authentication.principal.user.id")
 	@PutMapping(value = "/{id}")
 	public UserDTO updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
-		UserDTO user = userService.updateUser(id, dto);
-		return user;
+		return userService.updateUser(id, dto);
 	}
 	
 	@PreAuthorize("#id == authentication.principal.user.id")

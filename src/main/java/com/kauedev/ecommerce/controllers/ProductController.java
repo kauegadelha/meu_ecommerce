@@ -37,6 +37,7 @@ public class ProductController {
 		return ResponseEntity.status(201).body(p);
 	}
 	
+	@PutMapping(value = "/{barcode}")
 	public ResponseEntity<ProductDTO> updateProduct(@PathVariable String barcode, @Valid @RequestBody ProductInsertDTO dto) {
 		ProductDTO p = productService.updateProduct(barcode, dto);
 		return ResponseEntity.ok(p);
