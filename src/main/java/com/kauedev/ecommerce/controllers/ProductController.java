@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kauedev.ecommerce.dto.ProductDTO;
 import com.kauedev.ecommerce.dto.ProductInsertDTO;
+import com.kauedev.ecommerce.dto.ProductUpdateDTO;
 import com.kauedev.ecommerce.services.ProductService;
 
 import jakarta.validation.Valid;
@@ -38,7 +39,7 @@ public class ProductController {
 	}
 	
 	@PutMapping(value = "/{barcode}")
-	public ResponseEntity<ProductDTO> updateProduct(@PathVariable String barcode, @Valid @RequestBody ProductInsertDTO dto) {
+	public ResponseEntity<ProductDTO> updateProduct(@PathVariable String barcode, @Valid @RequestBody ProductUpdateDTO dto) {
 		ProductDTO p = productService.updateProduct(barcode, dto);
 		return ResponseEntity.ok(p);
 	}

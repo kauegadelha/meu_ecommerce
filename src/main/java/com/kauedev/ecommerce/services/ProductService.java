@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kauedev.ecommerce.dto.ProductDTO;
 import com.kauedev.ecommerce.dto.ProductInsertDTO;
+import com.kauedev.ecommerce.dto.ProductUpdateDTO;
 import com.kauedev.ecommerce.entities.Product;
 import com.kauedev.ecommerce.repositories.ProductRepository;
 import com.kauedev.ecommerce.services.exceptions.ResourceNotFoundException;
@@ -45,17 +46,17 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public ProductDTO updateProduct(String barcode, ProductInsertDTO dto) {
-		Product updated = productRepository.findById(barcode)
+	public ProductDTO updateProduct(String barcode, ProductUpdateDTO dto) {
+		Product product = productRepository.findById(barcode)
 				.orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado: %s".formatted(barcode)));	
 		
-		updated.setName(dto.getName());
-		updated.setPrice(dto.getPrice());
-		updated.setShortDescription(dto.getShortDescription());		
+		product.setName(dto.getName());
+		product.setPrice(dto.getPrice());
+		product.setShortDescription(dto.getShortDescription());		
 		
-		updated = productRepository.save(updated);
+		product = productRepository.save(product);
 		
-		return new ProductDTO(updated);
+		return new ProductDTO(product);
 	}
 	
 	@Transactional
