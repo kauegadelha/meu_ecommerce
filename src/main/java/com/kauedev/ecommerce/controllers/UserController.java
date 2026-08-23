@@ -30,14 +30,16 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping(value = "/me")
-	public UserDTO findMe(@AuthenticationPrincipal UserPrincipal userPrincipal) {
-		return new UserDTO(userPrincipal.getUser());
+	public ResponseEntity<UserDTO> findMe(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+		UserDTO dto = new UserDTO(userPrincipal.getUser());
+		return ResponseEntity.ok(dto);
 	}
-	
+
 	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
 	@GetMapping(value = "/name")
-	public UserDTO findUser(@RequestParam String name) {
-		return userService.findUser(name);
+	public ResponseEntity<UserDTO> findUser(@RequestParam String name) {
+		UserDTO dto = userService.findUser(name);
+		return ResponseEntity.ok(dto);
 	}
 	
 	@PostMapping()
@@ -48,8 +50,9 @@ public class UserController {
 	
 	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER') or #id == authentication.principal.user.id")
 	@PutMapping(value = "/{id}")
-	public UserDTO updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
-		return userService.updateUser(id, dto);
+	public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
+		UserDTO user = userService.updateUser(id, dto);
+		return ResponseEntity.ok(user);
 	}
 	
 	@PreAuthorize("#id == authentication.principal.user.id")
