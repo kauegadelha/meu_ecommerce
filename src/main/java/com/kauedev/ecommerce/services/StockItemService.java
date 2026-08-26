@@ -1,5 +1,7 @@
 package com.kauedev.ecommerce.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,5 +43,42 @@ public class StockItemService {
 		item = stockItemRepository.save(item);
 
 		return new StockItemDTO(item);
+	}
+	
+	@Transactional
+	public void deleteOrDecrementItem(Long stockId, String barcode, int amount) {
+		Stock stock = stockRepository.findById(stockId)
+				.orElseThrow(() -> new ResourceNotFoundException("Estoque não encontrado, id: %d".formatted(stockId)));
+
+		Product product = productRepository.findById(barcode)
+				.orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado: %s".formatted(barcode)));
+
+		StockItem item = stockItemRepository.findByStockAndProduct(stock, product)
+				.orElseThrow(() -> new ResourceNotFoundException("Item não encontrado nesse estoque"));
+		
+		if (item.getQuantity() == amount) {
+			stockItemRepository.deleteById(item.getId());
+			return;
+		}
+		
+		if (!item.removeQuantity(amount)) {
+			throw new IllegalArgumentException("Quantidade acima da disponível no estoque!");
+		}
+		
+		stockItemRepository.save(item);
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<StockItemDTO> findItemsByStockId(Long stockId){
+		if(!stockRepository.existsById(stockId)) {
+			throw new ResourceNotFoundException("Estoque não encontrado, id: %d".formatted(stockId));
+		}
+		
+		List<StockItem> items = stockItemRepository.findByStockId(stockId);
+		
+		return items.stream()
+				.map(i -> new StockItemDTO(i))
+				.toList();
 	}
 }

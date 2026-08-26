@@ -30,5 +30,10 @@ public class ResourceExceptionHandler {
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
 	}
+	
+	@ExceptionHandler(IllegalStateException.class)
+	public ResponseEntity<String> illegalState(IllegalStateException e, HttpServletRequest request){
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+	}
 
 }

@@ -28,8 +28,9 @@ public class ProductController {
 	private ProductService productService;
 	
 	@GetMapping(value = "/name")
-	public List<ProductDTO> findByName(@RequestParam String name) {
-		return productService.findByName(name);
+	public ResponseEntity<List<ProductDTO>> findByName(@RequestParam String name) {
+		List<ProductDTO> p = productService.findByName(name);
+		return ResponseEntity.ok(p);
 	}
 	
 	@PostMapping

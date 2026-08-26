@@ -40,7 +40,6 @@ public class Product {
 		this.name = name;
 		if (!validatePrice(price)) throw new IllegalArgumentException("Preço inferior ou igual a zero é inválido!");
 		this.price = price;
-		if (shortDescription == null || shortDescription.isBlank()) throw new IllegalArgumentException("Descrição curta é obrigatória!");
 		this.shortDescription = shortDescription;
 		this.createdAt = LocalDateTime.now();
 		this.updatedAt = createdAt;
@@ -71,7 +70,6 @@ public class Product {
 	}
 	
 	public void setShortDescription(String shortDescription) {
-		if (shortDescription == null || shortDescription.isBlank()) throw new IllegalArgumentException("Descrição curta é obrigatória!");
 		this.shortDescription = shortDescription;
 		updateTimestamp();
 	}
