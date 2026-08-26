@@ -12,18 +12,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.kauedev.ecommerce.services.exceptions.ResourceNotFoundException;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 @RestControllerAdvice
 public class ResourceExceptionHandler {
 
 	@ExceptionHandler(ResourceNotFoundException.class)
-	public ResponseEntity<String> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request){
+	public ResponseEntity<String> resourceNotFound(ResourceNotFoundException e){
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Map<String, String>> validationError(MethodArgumentNotValidException e, HttpServletRequest request){
+	public ResponseEntity<Map<String, String>> validationError(MethodArgumentNotValidException e){
 		Map<String, String> errors = new LinkedHashMap<>();
 		for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
 			errors.put(fieldError.getField(), fieldError.getDefaultMessage());
@@ -32,8 +30,13 @@ public class ResourceExceptionHandler {
 	}
 	
 	@ExceptionHandler(IllegalStateException.class)
-	public ResponseEntity<String> illegalState(IllegalStateException e, HttpServletRequest request){
+	public ResponseEntity<String> illegalState(IllegalStateException e){
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+	}
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<String> illegalArgumentException(IllegalArgumentException e){
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 	}
 
 }
