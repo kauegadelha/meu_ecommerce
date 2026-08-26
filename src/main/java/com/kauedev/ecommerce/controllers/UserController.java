@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kauedev.ecommerce.dto.PasswordUpdateDTO;
 import com.kauedev.ecommerce.dto.UserDTO;
 import com.kauedev.ecommerce.dto.UserInsertDTO;
 import com.kauedev.ecommerce.dto.UserUpdateDTO;
@@ -57,8 +58,8 @@ public class UserController {
 	
 	@PreAuthorize("#id == authentication.principal.user.id")
 	@PatchMapping(value = "/{id}/password")
-	public ResponseEntity<Void> updatePassword(@PathVariable Long id,@RequestBody String newPassword) {
-		userService.updatePassword(id, newPassword);
+	public ResponseEntity<Void> updatePassword(@PathVariable Long id, @Valid @RequestBody PasswordUpdateDTO dto) {
+		userService.updatePassword(id, dto);
 		return ResponseEntity.noContent().build();
 	}
 	

@@ -24,15 +24,15 @@ public class Address {
 	}
 	
 	public Address(String state, String city, String neighborhood, String road, String houseNumber) {
-		if (state.isEmpty() || state.isBlank()) throw new IllegalArgumentException("Estado é obrigatório!");
+		if (state == null || state.isBlank()) throw new IllegalArgumentException("Estado é obrigatório!");
 		this.state = state;
-		if (city.isEmpty() || city.isBlank()) throw new IllegalArgumentException("Cidade é obrigatória!");
+		if (city == null || city.isBlank()) throw new IllegalArgumentException("Cidade é obrigatória!");
 		this.city = city;
-		if (neighborhood.isEmpty() || neighborhood.isBlank()) throw new IllegalArgumentException("Bairro é obrigatório!");
+		if (neighborhood == null || neighborhood.isBlank()) throw new IllegalArgumentException("Bairro é obrigatório!");
 		this.neighborhood = neighborhood;
-		if (road.isEmpty() || road.isBlank()) throw new IllegalArgumentException("Rua é obrigatória!");
+		if (road == null || road.isBlank()) throw new IllegalArgumentException("Rua é obrigatória!");
 		this.road = road;
-		if (houseNumber.isEmpty() || houseNumber.isBlank()) throw new IllegalArgumentException("Número da casa/apt é obrigatório!");
+		if (houseNumber == null || houseNumber.isBlank()) throw new IllegalArgumentException("Número da casa/apt é obrigatório!");
 		this.houseNumber = houseNumber;
 	}
 	
@@ -44,35 +44,35 @@ public class Address {
 		return state;
 	}
 	public void setState(String state) {
-		if (state.isEmpty() || state.isBlank()) throw new IllegalArgumentException("Estado é obrigatório!");
+		if (state == null || state.isBlank()) throw new IllegalArgumentException("Estado é obrigatório!");
 		this.state = state;
 	}
 	public String getCity() {
 		return city;
 	}
 	public void setCity(String city) {
-		if (city.isEmpty() || city.isBlank()) throw new IllegalArgumentException("Cidade é obrigatória!");
+		if (city == null || city.isBlank()) throw new IllegalArgumentException("Cidade é obrigatória!");
 		this.city = city;
 	}
 	public String getNeighborhood() {
 		return neighborhood;
 	}
 	public void setNeighborhood(String neighborhood) {
-		if (neighborhood.isEmpty() || neighborhood.isBlank()) throw new IllegalArgumentException("Bairro é obrigatório!");
+		if (neighborhood == null || neighborhood.isBlank()) throw new IllegalArgumentException("Bairro é obrigatório!");
 		this.neighborhood = neighborhood;
 	}
 	public String getRoad() {
 		return road;
 	}
 	public void setRoad(String road) {
-		if (road.isEmpty() || road.isBlank()) throw new IllegalArgumentException("Rua é obrigatória!");
+		if (road == null || road.isBlank()) throw new IllegalArgumentException("Rua é obrigatória!");
 		this.road = road;
 	}
 	public String getHouseNumber() {
 		return houseNumber;
 	}
 	public void setHouseNumber(String houseNumber) {
-		if (houseNumber.isEmpty() || houseNumber.isBlank()) throw new IllegalArgumentException("Número da casa/apt é obrigatório!");
+		if (houseNumber == null || houseNumber.isBlank()) throw new IllegalArgumentException("Número da casa/apt é obrigatório!");
 		this.houseNumber = houseNumber;
 	}
 	

@@ -50,11 +50,11 @@ public class User {
 	}
 
 	public User(String userName, String password, String phone, Address address, Role role) {
-		if (userName.isEmpty() || userName.isBlank()) throw new IllegalArgumentException("Nome de usuário é obrigatório!");
+		if (userName == null || userName.isBlank()) throw new IllegalArgumentException("Nome de usuário é obrigatório!");
 		this.userName = userName;
-		if (password.isEmpty() || password.isBlank()) throw new IllegalArgumentException("Senha de usuário é obrigatório!");
+		if (password == null || password.isBlank()) throw new IllegalArgumentException("Senha de usuário é obrigatório!");
 		this.password = password;
-		if (phone.isEmpty() || phone.isBlank()) throw new IllegalArgumentException("Número de telefone é obrigatório!");
+		if (phone == null || phone.isBlank()) throw new IllegalArgumentException("Número de telefone é obrigatório!");
 		this.phone = phone;
 		if (address == null) throw new IllegalArgumentException("Endereço é obrigatório!");
 		this.address = address;
@@ -71,7 +71,7 @@ public class User {
 	}
 	
 	public void setUserName(String userName) {
-		if (userName.isEmpty() || userName.isBlank()) throw new IllegalArgumentException("Nome de usuário é obrigatório!");
+		if (userName == null || userName.isBlank()) throw new IllegalArgumentException("Nome de usuário é obrigatório!");
 		this.userName = userName;
 	}
 	
@@ -80,7 +80,7 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		if (password.isEmpty() || password.isBlank()) throw new IllegalArgumentException("Senha de usuário é obrigatório!");
+		if (password == null || password.isBlank()) throw new IllegalArgumentException("Senha de usuário é obrigatório!");
 		this.password = password;
 	}
 
@@ -91,7 +91,7 @@ public class User {
 
 
 	public void setPhone(String phone) {
-		if (phone.isEmpty() || phone.isBlank()) throw new IllegalArgumentException("Número de telefone é obrigatório!");
+		if (phone == null || phone.isBlank()) throw new IllegalArgumentException("Número de telefone é obrigatório!");
 		this.phone = phone;
 	}
 
@@ -112,12 +112,12 @@ public class User {
 		if (!(obj instanceof User)) return false;
 
 		User other = (User) obj;
-		return userName.equals(other.userName);
+		return id != null && id.equals(other.id);
 	}
 
 	@Override
 	public int hashCode() {
-		return userName.hashCode();
+		return getClass().hashCode();
 	}
 
 }

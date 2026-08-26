@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kauedev.ecommerce.dto.AddressInsertDTO;
+import com.kauedev.ecommerce.dto.PasswordUpdateDTO;
 import com.kauedev.ecommerce.dto.UserDTO;
 import com.kauedev.ecommerce.dto.UserInsertDTO;
 import com.kauedev.ecommerce.dto.UserUpdateDTO;
@@ -85,11 +86,11 @@ public class UserService {
 	}
 	
 	@Transactional
-	public void updatePassword(Long id, String newPassword) {
+	public void updatePassword(Long id, PasswordUpdateDTO dto) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado, id: %d".formatted(id)));
 
-	    user.setPassword(passwordEncoder.encode(newPassword));
+	    user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
 	    userRepository.save(user);
 	}
 	
