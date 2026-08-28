@@ -20,18 +20,16 @@ public class OrderItem {
 	
 	@ManyToOne
 	@JoinColumn(name = "order_id",nullable = false)
-	private final Order order;
+	private Order order;
 	
 	@ManyToOne
 	@JoinColumn(name = "product_barcode", nullable = false)
-	private final Product product;
+	private Product product;
 	
 	private int quantity;
 	private BigDecimal priceAtPurchase;
 	
 	protected OrderItem() {
-		this.product = null;
-		this.order = null;
 	}
 	
 	public OrderItem(Order order, Product product, int quantity) {
@@ -75,6 +73,10 @@ public class OrderItem {
 		if (amount > quantity) throw new IllegalArgumentException("Quantidade maior que a existente!");
 		
 		this.quantity -= amount;
+	}
+	
+	public BigDecimal getSubtotal() {
+		return priceAtPurchase.multiply(BigDecimal.valueOf(quantity));
 	}
 	
 	@Override

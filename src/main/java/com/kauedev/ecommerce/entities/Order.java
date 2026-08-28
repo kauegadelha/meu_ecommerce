@@ -1,4 +1,5 @@
 package com.kauedev.ecommerce.entities;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +11,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -20,6 +23,11 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<OrderItem> items;
@@ -32,13 +40,23 @@ public class Order {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
 	
-	public Order() {
+	protected Order() {
+	}
+	
+	public Order(User user) {
+		if (user == null) throw new IllegalArgumentException("Usuário é obrigatório!");
+		
+		this.user = user;
 		this.items = new ArrayList<>();
 		this.status = OrderStatus.DRAFT;
 	}
 
 	public Long getId() {
 		return id;
+	}
+	
+	public User getUser() {
+		return user;
 	}
 	
 	public OrderStatus getStatus() {
@@ -89,6 +107,12 @@ public class Order {
 	
 	public List<OrderItem> getItems(){
 		return List.copyOf(items);
+	}
+	
+	public BigDecimal getTotal() {
+		return items.stream()
+				.map(OrderItem::getSubtotal)
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 	
 	@Override
