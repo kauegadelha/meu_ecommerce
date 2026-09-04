@@ -101,6 +101,7 @@ public class Order {
 	}
 	
 	public void submit() {
+		if (status != OrderStatus.DRAFT) throw new IllegalStateException("Apenas pedidos em rascunho podem ser enviados!");
 	    if (items.isEmpty()) throw new IllegalStateException("Pedido vazio não pode ser enviado!");
 	    this.status = OrderStatus.SUBMITTED;
 	}

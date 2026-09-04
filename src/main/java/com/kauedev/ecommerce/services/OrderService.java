@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kauedev.ecommerce.dto.OrderDTO;
 import com.kauedev.ecommerce.dto.OrderItemInsertDTO;
 import com.kauedev.ecommerce.entities.Order;
+import com.kauedev.ecommerce.entities.OrderItem;
 import com.kauedev.ecommerce.entities.Product;
+import com.kauedev.ecommerce.entities.StockItem;
 import com.kauedev.ecommerce.entities.User;
 import com.kauedev.ecommerce.repositories.OrderRepository;
 import com.kauedev.ecommerce.repositories.ProductRepository;
@@ -25,7 +27,7 @@ public class OrderService {
 	private ProductRepository productRepository;
 	
 	@Autowired
-	private StockItemRepository stockItemRepositoy;
+	private StockItemRepository stockItemRepository;
 	
 	public void validateOwnership(Order order, User user) {
 		if (!order.getUser().getId().equals(user.getId())) {
@@ -37,6 +39,7 @@ public class OrderService {
 	public OrderDTO insertOrder(User user, OrderItemInsertDTO dto) {
 		Product product = productRepository.findById(dto.getProductBarcode())
 			.orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado: %s".formatted(dto.getProductBarcode())));
+		
 		Order order = new Order(user);
 		
 		order.addItem(product, dto.getQuantity());
@@ -49,6 +52,7 @@ public class OrderService {
 	public OrderDTO addItem(Long orderId, User user, OrderItemInsertDTO dto) {
 		Order order = orderRepository.findById(orderId)
 				.orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado: %d".formatted(orderId)));
+		
 		validateOwnership(order, user);
 		
 		Product product = productRepository.findById(dto.getProductBarcode())
@@ -64,6 +68,7 @@ public class OrderService {
 	public OrderDTO removeItem(Long orderId, User user, String barcode, int quantity) {
 		Order order = orderRepository.findById(orderId)
 				.orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado: %d".formatted(orderId)));
+		
 		validateOwnership(order, user);
 		
 		Product product = productRepository.findById(barcode)
@@ -72,6 +77,35 @@ public class OrderService {
 		if(!order.removeItem(product, quantity)) {
 			throw new ResourceNotFoundException("Produto não encontrado neste pedido: %s".formatted(barcode));
 		}
+		order = orderRepository.save(order);
+		
+		return new OrderDTO(order);
+	}
+	
+	@Transactional
+	public OrderDTO submitOrder(Long orderId, User user) {
+		
+		Order order = orderRepository.findById(orderId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado: %d".formatted(orderId)));
+		
+		validateOwnership(order, user);
+		
+		order.submit();
+		
+		for (OrderItem orderItem: order.getItems()) {
+			
+			String barcode = orderItem.getProduct().getBarcode();
+			int neededQuantity = orderItem.getQuantity();
+			
+			StockItem availableStockItem = stockItemRepository.findByProductBarcode(barcode).stream()
+					.filter(si -> si.hasAvailableQuantity(neededQuantity))
+					.findFirst()
+					.orElseThrow(() -> new IllegalStateException("Estoque insuficiente para o produto: %s".formatted(barcode)));
+			
+			availableStockItem.removeQuantity(neededQuantity);
+			stockItemRepository.save(availableStockItem);
+		}
+		
 		order = orderRepository.save(order);
 		
 		return new OrderDTO(order);

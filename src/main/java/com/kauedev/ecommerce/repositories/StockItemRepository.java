@@ -14,4 +14,6 @@ public interface StockItemRepository extends JpaRepository<StockItem, Long> {
 	Optional<StockItem> findByStockAndProduct(Stock stock, Product product);
 	
 	List<StockItem> findByStockId(Long stockId);
+	
+	List<StockItem> findByProductBarcode(String barcode);
 }

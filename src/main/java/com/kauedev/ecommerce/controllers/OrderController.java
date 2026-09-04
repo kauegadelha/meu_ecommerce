@@ -41,4 +41,10 @@ public class OrderController {
 		OrderDTO order = orderService.removeItem(orderId, userPrincipal.getUser(), barcode, quantity);
 		return ResponseEntity.ok(order);
 	}
+	
+	@PostMapping(value = "/{orderId}/submit")
+	public ResponseEntity<OrderDTO> submitOrder(@AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable Long orderId){
+		OrderDTO order = orderService.submitOrder(orderId, userPrincipal.getUser());
+		return ResponseEntity.ok(order);
+	}
 }
