@@ -2,6 +2,7 @@ package com.kauedev.ecommerce.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,24 +26,28 @@ public class StockController {
 	@Autowired
 	private StockService stockService;
 	
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
 	@GetMapping(value = "/name")
 	public ResponseEntity<StockDTO> findByName(@RequestParam String name){
 		StockDTO stock = stockService.findByName(name);
 		return ResponseEntity.ok(stock);
 	}
-
+	
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
 	@PostMapping
 	public ResponseEntity<StockDTO> insertStock(@Valid @RequestBody StockInsertDTO dto){
 		StockDTO stock = stockService.insertStock(dto);
 		return ResponseEntity.status(201).body(stock);
 	}
-
+	
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<StockDTO> updateStock(@PathVariable Long id, @Valid @RequestBody StockInsertDTO dto) {
 		StockDTO stock = stockService.updateStock(id, dto);
 		return ResponseEntity.ok(stock);
 	}
-
+	
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteStock(@PathVariable Long id) {
 		stockService.deleteStock(id);

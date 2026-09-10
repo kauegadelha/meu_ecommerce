@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,13 +26,15 @@ public class StockItemController {
 
 	@Autowired
 	private StockItemService stockItemService;
-
+	
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
 	@PostMapping
 	public ResponseEntity<StockItemDTO> insertOrIncrementItem(@PathVariable Long stockId, @Valid @RequestBody StockItemInsertDTO dto) {
 		StockItemDTO item = stockItemService.insertOrIncrementItem(stockId, dto);
 		return ResponseEntity.status(201).body(item);
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
 	@DeleteMapping(value = "/{barcode}")
 	public ResponseEntity<Void> deleteOrDecrementItem(
 			@PathVariable Long stockId,
@@ -41,6 +44,7 @@ public class StockItemController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
 	@GetMapping
 	public ResponseEntity<List<StockItemDTO>> findItemsByStockId(@PathVariable Long stockId){
 		List<StockItemDTO> items = stockItemService.findItemsByStockId(stockId);
