@@ -61,7 +61,9 @@ O objetivo do projeto é reforçar o aprendizado em aplicações que seguem o pa
 ```bash
  git clone https://github.com/kauegadelha/meu_ecommerce.git
 ```
-3. Instale o PgAdmin (PostgreSQL)
+2. Instale o PostgreSQL (o servidor do banco de dados)
+ 
+3. Instale o PgAdmin (interface gráfica para gerenciar o PostgreSQL)
 
 4. Register Server:
 - Name: `meu-ecommerce-local`
@@ -69,7 +71,7 @@ O objetivo do projeto é reforçar o aprendizado em aplicações que seguem o pa
 - Port: `5432` 
 - Maintenance database: `postgres`
 - Username: `postgres`
-- Passoword: de sua preferência
+- Password: de sua preferência
 - Save
 
 5. Databases (Create Database):
@@ -78,14 +80,18 @@ O objetivo do projeto é reforçar o aprendizado em aplicações que seguem o pa
 
 6. Abra o projeto em sua IDE (IntelliJ, VS Code, Eclipse, etc) ou STS Spring Boot.
 
-7. Crie a variável de ambiente (Spring boot)
+7. Crie a variável de ambiente
+
+> Nota: os passos abaixo são para Eclipse/STS. Se estiver usando IntelliJ ou VS Code, configure a variável de ambiente na respectiva tela de Run/Debug Configuration (IntelliJ) ou no `launch.json` (VS Code).
+
 - botão direito no nome do projeto
 - Clique em `Run As`
 - Clique em `Run Configurations`
 - Acesse em `Environment` -> `Add`
 - Coloque o nome das variáveis com o mesmo nome configurado em properties: `DB_PASSWORD` e `JWT_SECRET`
-- Preencha a senha da variável de ambiente `DB_PASSWORD` com a mesma senha do servidor do banco de dados criado anteriormente
-
+- Preencha `DB_PASSWORD` com a mesma senha do servidor do banco de dados criado anteriormente
+- Preencha `JWT_SECRET` com uma string aleatória e longa (ex: gere uma com `openssl rand -base64 32` no terminal)
+  
 8. Execute a aplicação, aperte F5 ou no Spring Boot -> botão direito no projeto + Restart. A aplicação conectará automaticamente via `localhost:8080`
 
 9. Instale o Postman.
