@@ -55,6 +55,31 @@ O objetivo do projeto é reforçar o aprendizado em aplicações que seguem o pa
 - `DELETE /order/{orderId}/items/{barcode}` — Remover um produto da lista do pedido ou decrementar a sua quantidade (Acesso restrito ao dono do pedido)
 - `POST /order/{orderId}/submit` — Enviar um pedido (Acesso restrito ao dono do pedido)
 
+### Execução do projeto
+
+1. Faça o clone do repositório:
+```bash
+git clone https://github.com/kauegadelha/meu_ecommerce.git
+```
+2. Abra o projeto em sua IDE (IntelliJ, VS Code, Eclipse, etc).
+
+3. Execute a aplicação. A aplicação conectará automaticamente via `localhost:8080`
+   
+5. Instale o PgAdmin (PostgreSQL)
+
+6. Register Server:
+- Name: `meu-ecommerce-local`
+- Conection/ Host name/ address: `localhost`
+- Port: `5432` 
+- Maintenance database: `postgres`
+- Username: `postgres`
+- Passoword: de sua preferência
+- Save
+
+6. Databases (Create Database):
+- Database: `ecommerce`
+- Save
+
 
 
 
