@@ -55,8 +55,16 @@ O objetivo do projeto é reforçar o aprendizado em aplicações que seguem o pa
 - `DELETE /order/{orderId}/items/{barcode}` — Remover um produto da lista do pedido ou decrementar a sua quantidade (Acesso restrito ao dono do pedido)
 - `POST /order/{orderId}/submit` — Enviar um pedido (Acesso restrito ao dono do pedido)
 
-### Execução do projeto
+## Prints da aplicação
+### Create User
 
+### Login User
+
+### Create Order
+
+### Submit Order
+
+## Execução do projeto
 1. Faça o clone do repositório:
 ```bash
  git clone https://github.com/kauegadelha/meu_ecommerce.git
