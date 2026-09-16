@@ -59,15 +59,11 @@ O objetivo do projeto é reforçar o aprendizado em aplicações que seguem o pa
 
 1. Faça o clone do repositório:
 ```bash
-git clone https://github.com/kauegadelha/meu_ecommerce.git
+ git clone https://github.com/kauegadelha/meu_ecommerce.git
 ```
-2. Abra o projeto em sua IDE (IntelliJ, VS Code, Eclipse, etc).
+3. Instale o PgAdmin (PostgreSQL)
 
-3. Execute a aplicação. A aplicação conectará automaticamente via `localhost:8080`
-   
-5. Instale o PgAdmin (PostgreSQL)
-
-6. Register Server:
+4. Register Server:
 - Name: `meu-ecommerce-local`
 - Conection/ Host name/ address: `localhost`
 - Port: `5432` 
@@ -76,9 +72,29 @@ git clone https://github.com/kauegadelha/meu_ecommerce.git
 - Passoword: de sua preferência
 - Save
 
-6. Databases (Create Database):
+5. Databases (Create Database):
 - Database: `ecommerce`
 - Save
+
+6. Abra o projeto em sua IDE (IntelliJ, VS Code, Eclipse, etc) ou STS Spring Boot.
+
+7. Crie a variável de ambiente (Spring boot)
+- botão direito no nome do projeto
+- Clique em `Run As`
+- Clique em `Run Configurations`
+- Acesse em `Environment` -> `Add`
+- Coloque o nome das variáveis com o mesmo nome configurado em properties: `DB_PASSWORD` e `JWT_SECRET`
+- Preencha a senha da variável de ambiente `DB_PASSWORD` com a mesma senha do servidor do banco de dados criado anteriormente
+
+8. Execute a aplicação, aperte F5 ou no Spring Boot -> botão direito no projeto + Restart. A aplicação conectará automaticamente via `localhost:8080`
+
+9. Instale o Postman.
+
+10. Abra o Postman e crie uma Internal Workspace com nome: `Ecommerce API`
+
+11. Crie as seguintes Collections: `User`, `Product`, `Stock`, `StockItem`, `Order`
+
+12. Coloque os endpoints na Collection que for utilizar. Exemplo: `http://localhost:8080/user` e o protocolo HTTP exigido.
 
 
 
