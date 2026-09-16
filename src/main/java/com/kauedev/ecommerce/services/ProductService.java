@@ -34,6 +34,10 @@ public class ProductService {
 	
 	@Transactional
 	public ProductDTO insertProduct(ProductInsertDTO dto) {
+		if (productRepository.existsById(dto.getBarcode())) {
+	        throw new IllegalArgumentException("Produto já existente: %s".formatted(dto.getBarcode()));
+	    }
+		
 		Product p = new Product(
 				dto.getBarcode(),
 				dto.getName(),

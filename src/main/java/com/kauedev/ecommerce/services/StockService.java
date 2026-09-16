@@ -28,6 +28,10 @@ public class StockService {
 	
 	@Transactional
 	public StockDTO insertStock(StockInsertDTO dto) {
+		if (stockRepository.findByName(dto.getName()).isPresent()) {
+	        throw new IllegalArgumentException("Estoque já existente: %s".formatted(dto.getName()));
+	    }
+		
 		Stock stock = new Stock(dto.getName());
 		stock = stockRepository.save(stock);
 		return new StockDTO(stock);
