@@ -55,14 +55,18 @@ O objetivo do projeto é reforçar o aprendizado em aplicações que seguem o pa
 - `DELETE /order/{orderId}/items/{barcode}` — Remover um produto da lista do pedido ou decrementar a sua quantidade (Acesso restrito ao dono do pedido)
 - `POST /order/{orderId}/submit` — Enviar um pedido (Acesso restrito ao dono do pedido)
 
-## Prints da aplicação
+## Prints da aplicação / Postman
 ### Create User
+![Create User](images/create-user.png)
 
 ### Login User
+![Login User](images/login-user.png)
 
 ### Create Order
+![Create Order](images/create-order.png)
 
 ### Submit Order
+![Submit Order](images/submit-order.png)
 
 ## Execução do projeto
 1. Faça o clone do repositório:
